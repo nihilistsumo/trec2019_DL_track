@@ -59,7 +59,7 @@ doc_dict = dict()
 df = pd.read_csv(collection_file, sep='\t', header=None, names=['id','text'])
 with open(docid_list_file, 'r') as dl:
     for l in dl:
-        doc_dict[l] = df.at[l, 'text']
+        doc_dict[l] = df.at[int(l), 'text']
 preproc_doctext_dict = preprocessed_paratext(doc_dict)
 doc_embed_dict = dict()
 print("Data loaded")

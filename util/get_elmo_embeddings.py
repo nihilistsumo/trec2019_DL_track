@@ -46,7 +46,7 @@ def get_mean_elmo_embeddings(docid):
 
 parser = argparse.ArgumentParser(description="Generate ELMo embeddings for docs")
 parser.add_argument("-c", "--collection", required=True, help="Path to collection tsv file")
-parser.add_argument("-dl", "--docid_list", required=True, help="Path to docid list file")
+parser.add_argument("-dl", "--docid_list", nargs="?", help="Path to docid list file")
 parser.add_argument("-tn", "--thread_count", type=int, required=True, help="No of threads in Thread pool")
 parser.add_argument("-o", "--out", required=True, help="Path to output file")
 args = vars(parser.parse_args())
@@ -57,9 +57,15 @@ outfile = args["out"]
 
 doc_dict = dict()
 df = pd.read_csv(collection_file, sep='\t', header=None, names=['id','text'])
-with open(docid_list_file, 'r') as dl:
-    for l in dl:
-        doc_dict[l] = df.at[int(l), 'text']
+
+if docid_list_file == None:
+    for index, row in df.iterrows():
+        doc_dict[row['id']] = row['text']
+else:
+    with open(docid_list_file, 'r') as dl:
+        for l in dl:
+            doc_dict[l] = df.at[int(l), 'text']
+
 preproc_doctext_dict = preprocessed_paratext(doc_dict)
 doc_embed_dict = dict()
 print("Data loaded")

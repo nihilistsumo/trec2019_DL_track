@@ -119,7 +119,7 @@ def main():
     expanded_query_dict = expand_query(query_psg_score_dict, query_text_dict, psg_text_dict)
     with open(outfile, 'w') as out:
         for q in expanded_query_dict.keys():
-            out.write(str(q)+'\t'+expanded_query_dict[q]+'\n')
+            out.write(str(q).replace('\n', ' ')+'\t'+expanded_query_dict[q].replace('\n', ' ')+'\n')
     print("Done")
 
 if __name__ == '__main__':

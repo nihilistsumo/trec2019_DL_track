@@ -80,7 +80,7 @@ def expand_query(query_psg_scores, query_text_dict, psg_text_dict):
             if query_psg_scores[q][p] > top_score:
                 top_psg = p
                 top_score = query_psg_scores[q][p]
-        expanded_query_dict[q] = query_text_dict[q] + ". " + psg_text_dict[top_psg]
+        expanded_query_dict[q] = query_text_dict[str(q)] + ". " + psg_text_dict[top_psg]
     return expanded_query_dict
 
 def main():

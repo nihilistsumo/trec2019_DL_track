@@ -118,7 +118,8 @@ def main():
     print("Going to expand query")
     expanded_query_dict = expand_query(query_psg_score_dict, query_text_dict, psg_text_dict)
     with open(outfile, 'w') as out:
-        json.dump(expanded_query_dict, out)
+        for q in expanded_query_dict.keys():
+            out.write(str(q)+'\t'+expanded_query_dict[q]+'\n')
     print("Done")
 
 if __name__ == '__main__':
